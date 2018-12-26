@@ -1,6 +1,7 @@
 from anachronos import Anachronos
 from anachronos.anachronos import AnachronosException
 from anachronos.assertions.order_comparison import IsBeforeAssertion, IsAfterAssertion, IsRoughlyAtTheSameTimeAssertion
+from anachronos.assertions.unary import NeverStoredAssertion, NeverContainedAssertion
 
 
 class Assertion(object):
@@ -13,7 +14,7 @@ class Assertion(object):
             raise AnachronosException(message)
 
 
-class AssertionFixture(Assertion):
+class AssertionFixture(object):
 
     def __init__(self, first_element):
         self.first_element = first_element
@@ -26,5 +27,12 @@ class AssertionFixture(Assertion):
 
     def is_at_same_time(self, other, delta_ms=1000) -> Assertion:
         return IsRoughlyAtTheSameTimeAssertion(self.first_element, other, delta_ms)
+
+    def is_never_stored(self) -> Assertion:
+        return NeverStoredAssertion(self.first_element)
+
+    def is_never_contained(self) -> Assertion:
+        return NeverContainedAssertion(self.first_element)
+
 
 assertThat = AssertionFixture
