@@ -25,3 +25,7 @@ class Anachronos(object):
             self.frozen_messages = list(self.messages.queue)
 
         return self.frozen_messages
+
+    def _reset(self):
+        self.messages = Queue()
+        self.frozen_messages = None
