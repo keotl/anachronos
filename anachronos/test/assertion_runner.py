@@ -2,7 +2,7 @@ from queue import Queue
 
 from anachronos import anachronos
 from anachronos.anachronos import AnachronosException
-from anachronos.assertion import Assertion
+from anachronos.test.assertion import Assertion
 
 
 class AssertionRunner(object):

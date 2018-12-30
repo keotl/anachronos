@@ -1,7 +1,8 @@
 from anachronos import Anachronos
 from anachronos.anachronos import AnachronosException
-from anachronos.assertions.order_comparison import IsBeforeAssertion, IsAfterAssertion, IsRoughlyAtTheSameTimeAssertion
-from anachronos.assertions.unary import NeverStoredAssertion, NeverContainedAssertion
+from anachronos.test.assertions.order_comparison import IsBeforeAssertion, IsAfterAssertion, \
+    IsRoughlyAtTheSameTimeAssertion
+from anachronos.test.assertions.unary import NeverStoredAssertion, NeverContainedAssertion
 
 
 class Assertion(object):
