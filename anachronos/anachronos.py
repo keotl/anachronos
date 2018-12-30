@@ -2,6 +2,8 @@ from datetime import datetime
 from queue import Queue
 from typing import List
 
+import requests
+
 from anachronos.message import Message
 
 
@@ -10,6 +12,12 @@ class AnachronosException(BaseException):
 
 
 class Anachronos(object):
+
+    def store(self, item):
+        raise NotImplementedError
+
+
+class MessageQueue(Anachronos):
 
     def __init__(self):
         self.messages = Queue()
@@ -29,3 +37,13 @@ class Anachronos(object):
     def _reset(self):
         self.messages = Queue()
         self.frozen_messages = None
+
+
+class RemoteAnachronosProxy(Anachronos):
+
+    def __init__(self, url='localhost:4001/'):
+        self.url = url
+
+    def store(self, item):
+        requests.post(self.url, data={'payload': item})
+
