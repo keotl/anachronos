@@ -1,6 +1,6 @@
 from anachronos import Anachronos
-from anachronos.test.assertion import Assertion
 from anachronos.compat.jivago_streams import Stream
+from anachronos.test.assertion import Assertion
 
 
 class UnaryAssertion(Assertion):
@@ -34,3 +34,12 @@ class NeverContainedAssertion(UnaryAssertion):
 
     def condition(self, messages: list) -> bool:
         return Stream(messages).noneMatch(lambda x: self.item in x.payload)
+
+
+class IsStoredAssertion(UnaryAssertion):
+
+    def condition(self, messages: list):
+        return Stream(messages).anyMatch(lambda x: self.item == x.payload)
+
+    def message(self):
+        return f'Failed "IsStored" assertion. Expected {self.item} to be stored at least once, but never was.'

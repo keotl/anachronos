@@ -1,11 +1,10 @@
 from anachronos.anachronos import Anachronos
 from anachronos.communication.anachronos_client import AnachronosClient
+from anachronos.test.boot import test_runner
 
 __version__ = '@@VERSION@@'
 
 anachronos = None
 
 
-def setup_anachronos_client(queue):
-    global anachronos
-    anachronos = AnachronosClient(queue)
+TestCase = test_runner.TestCase

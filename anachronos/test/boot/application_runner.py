@@ -1,8 +1,7 @@
 import multiprocessing
-
 from multiprocessing import Process
 
-from anachronos import setup_anachronos_client
+from anachronos.setup import setup_anachronos_client
 
 
 class ApplicationRunner(object):

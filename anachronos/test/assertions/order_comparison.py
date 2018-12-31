@@ -2,8 +2,8 @@ from datetime import timedelta
 from typing import Callable
 
 from anachronos import Anachronos
-from anachronos.test.assertion import Assertion
 from anachronos.compat.jivago_streams import Stream
+from anachronos.test.assertion import Assertion
 
 
 class OrderComparisonAssertion(Assertion):
