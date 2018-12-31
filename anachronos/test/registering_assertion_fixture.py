@@ -24,8 +24,12 @@ class AssertionRegistry(object):
         return wrapped
 
     def create_fixture(self):
-        class RegisteringAssertionFixture(AssertionFixture):
-            @self._register
-            def is_stored(self) -> Assertion:
-                return super().is_stored()
+        class RegisteringAssertionFixture(object):
+            def __init__(that, x):
+                that.fixture = AssertionFixture(x)
+
+            def __getattr__(that, item):
+                return self._register(that.fixture.__getattribute__(item))
+
         return RegisteringAssertionFixture
+
