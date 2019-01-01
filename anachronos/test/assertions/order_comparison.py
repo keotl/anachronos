@@ -13,7 +13,7 @@ class OrderComparisonAssertion(Assertion):
         self.second = second
 
     def run(self, anachronos: "Anachronos"):
-        messages = anachronos._get_messages()
+        messages = Stream(anachronos._get_messages()).map(lambda x: x.payload).toList()
         first_index = messages.index(self.first)
         second_index = messages.index(self.second)
 

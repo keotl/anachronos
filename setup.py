@@ -40,7 +40,7 @@ setup(
     ],
 
     packages=find_packages(
-        exclude=['example']),
+        exclude=['example', 'tests', 'tests.*']),
 
     install_requires=[],
 )
