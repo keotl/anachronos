@@ -21,7 +21,7 @@ setup(
     name='anachronos',
     version_format='{tag}',
     setup_requires=['setuptools-git-version'],
-    description='A testing framework for testing testing frameworks.',
+    description='A testing framework for testing frameworks.',
     long_description=long_description,
     long_description_content_type='text/markdown',
 
