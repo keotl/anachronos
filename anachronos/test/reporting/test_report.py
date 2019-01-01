@@ -20,3 +20,6 @@ class TestReport(object):
             return TestStatus.ERROR
 
         return TestStatus.FAILURE
+
+    def is_success(self) -> bool:
+        return self.status == TestStatus.SUCCESS

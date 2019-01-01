@@ -1,12 +1,14 @@
 import logging
 import multiprocessing
+import sys
 import threading
 import time
-from typing import Type, Dict, List
+from typing import Type, List
 
 from anachronos.communication.logging_interfaces import MessageQueue
 from anachronos.communication.message_queue_consumer import MessageQueueConsumer
 from anachronos.compat.jivago_streams import Stream
+from anachronos.configuration import anachronos_config
 from anachronos.test.assertion_runner import AssertionRunner
 from anachronos.test.boot.application_runner import ApplicationRunner
 from anachronos.test.boot.test_case import TestCase
@@ -48,44 +50,24 @@ class TestRunner(object):
             lambda assertion_runner: assertion_runner.evaluate(self.anachronos_message_queue)).toList())
 
 
-test_classes: Dict[Type["TestCase"], Type[ApplicationRunner]] = {}
-default_runner = None
-
-
-def set_default_runner(runner: Type[ApplicationRunner]):
-    global default_runner
-    default_runner = runner
-
-
-def _register(runner_class, test_class):
-    if runner_class is None and test_classes.get(test_class) is not None:
-        return test_class
-    test_classes[test_class] = runner_class
-    return test_class
-
-
-def RunWith(runner: Type[ApplicationRunner]):
-    return lambda x: _register(runner, x)
-
-
-def RestartApp(x):
-    x.restart_before_running = True
-    return x
-
-
 def run_tests():
-    Stream(TestCase.__subclasses__()).forEach(lambda clazz: _register(None, clazz))
-    distinct_runner_classes = Stream(test_classes.values()).toSet()
+    Stream(TestCase.__subclasses__()).forEach(lambda clazz: anachronos_config.register_test_class(None, clazz))
+    distinct_runner_classes = Stream(anachronos_config.test_classes.values()).toSet()
     for runner_class in distinct_runner_classes:
 
-        test_classes_for_runner = Stream(test_classes.items()) \
+        test_classes_for_runner = Stream(anachronos_config.test_classes.items()) \
             .filter(lambda _, runner: runner == runner_class) \
             .map(lambda test_class, _: test_class) \
             .toList()
 
         if runner_class is None:
-            runner_class = default_runner
+            runner_class = anachronos_config.default_runner
 
         report = TestRunner(runner_class, test_classes_for_runner).run()
 
         Stream(report.subreports).forEach(StdoutReportFormatter().format)
+
+        if report.is_success():
+            sys.exit(0)
+        else:
+            sys.exit(1)

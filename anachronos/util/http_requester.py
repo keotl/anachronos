@@ -1,15 +1,15 @@
 import requests
 
 
-class Requester(object):
+class HttpRequester(object):
 
     def __init__(self, host='localhost', port=4000, path=''):
         self.path = path
         self.host = host
         self.port = port
 
-    def with_path(self, sub_path: str) -> "Requester":
-        return Requester(self.host + sub_path, self.port)
+    def with_path(self, sub_path: str) -> "HttpRequester":
+        return HttpRequester(self.host + sub_path, self.port)
 
     def get(self, path: str, *args, **kwargs):
         return requests.get(self.get_full_url(path), *args, **kwargs)
