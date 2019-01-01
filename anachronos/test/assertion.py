@@ -1,4 +1,4 @@
-from anachronos.exceptions import AnachronosException
+from anachronos.exceptions import AnachronosAssertionException
 
 
 class Assertion(object):
@@ -8,4 +8,4 @@ class Assertion(object):
 
     def _do_assertion(self, boolean: bool, message: str):
         if not boolean:
-            raise AnachronosException(message)
+            raise AnachronosAssertionException(message)

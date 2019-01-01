@@ -1,4 +1,3 @@
-from anachronos import Anachronos
 from anachronos.compat.jivago_streams import Stream
 from anachronos.test.assertion import Assertion
 
@@ -10,7 +9,7 @@ class OccursEveryXSeconds(Assertion):
         self.item = item
         self.interval_s = interval_s
 
-    def run(self, anachronos: Anachronos):
+    def run(self, anachronos: "Anachronos"):
         times = Stream(anachronos._get_messages()) \
             .filter(lambda x: x.payload == self.item) \
             .map(lambda x: x.time) \
@@ -20,7 +19,8 @@ class OccursEveryXSeconds(Assertion):
             .map(lambda current, next: next - current) \
             .allMatch(self.is_within_interval)
 
-        self._do_assertion(fits_criteria, f'Failed "OccursEveryXSeconds" assertion. Expected {self.item} to occur every {self.interval_s}s.')
+        self._do_assertion(fits_criteria,
+                           f'Failed "OccursEveryXSeconds" assertion. Expected {self.item} to occur every {self.interval_s}s.')
 
     def is_within_interval(self, delta_s) -> bool:
-        return self.interval_s * 1000 - self.tolerance_ms <= delta_s.total_seconds * 1000 <= self.interval_s * 1000 + self.tolerance_ms
+        return self.interval_s * 1000 - self.tolerance_ms <= delta_s.total_seconds() * 1000 <= self.interval_s * 1000 + self.tolerance_ms

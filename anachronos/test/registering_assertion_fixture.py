@@ -15,8 +15,8 @@ class AssertionRegistry(object):
         self.assertions = []
 
     def _register(self, x):
-        def wrapped(*args):
-            result = x(*args)
+        def wrapped(*args, **kwargs):
+            result = x(*args, **kwargs)
             self.assertions.append(result)
             return result
 
@@ -32,3 +32,5 @@ class AssertionRegistry(object):
 
         return RegisteringAssertionFixture
 
+    def monkey_patch_test_fixture(self, test_fixture) -> None:
+        test_fixture.assertThat = lambda x: self.create_fixture()(x)

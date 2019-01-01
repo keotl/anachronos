@@ -1,6 +1,7 @@
 import multiprocessing
 
 from anachronos.communication.logging_interfaces import MessageQueue
+from anachronos.exceptions import AnachronosException
 
 
 class MessageQueueConsumer(object):
@@ -14,7 +15,10 @@ class MessageQueueConsumer(object):
         while not self.should_stop:
             if not self.queue.empty():
                 message = self.queue.get(timeout=0.2)
-                self.anachronos_server.store(message)
+                try:
+                    self.anachronos_server.store(message)
+                except AnachronosException:
+                    self.stop()
 
     def stop(self):
         self.should_stop = True
