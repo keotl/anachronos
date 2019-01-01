@@ -9,6 +9,7 @@ from anachronos.communication.message_queue_consumer import MessageQueueConsumer
 from anachronos.compat.jivago_streams import Stream
 from anachronos.test.assertion_runner import AssertionRunner
 from anachronos.test.boot.application_runner import ApplicationRunner
+from anachronos.test.boot.test_case import TestCase
 from anachronos.test.boot.test_suite import TestSuite
 from anachronos.test.formatting.stdout_report_formatter import StdoutReportFormatter
 from anachronos.test.reporting.test_report_index import TestReportIndex
@@ -67,17 +68,13 @@ def RunWith(runner: Type[ApplicationRunner]):
     return lambda x: _register(runner, x)
 
 
-def RunTest(x):
-    _register(None, x)
-    return x
-
-
 def RestartApp(x):
     x.restart_before_running = True
     return x
 
 
 def run_tests():
+    Stream(TestCase.__subclasses__()).forEach(lambda clazz: _register(None, clazz))
     distinct_runner_classes = Stream(test_classes.values()).toSet()
     for runner_class in distinct_runner_classes:
 

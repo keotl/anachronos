@@ -1,11 +1,7 @@
 from anachronos.test.assertion_fixture import AssertionFixture
-from anachronos.test.boot.test_runner import _register
 
 
 class TestCase(object):
-
-    def __init__(self):
-        _register(None, self.__class__)
 
     def setUp(self):
         pass
