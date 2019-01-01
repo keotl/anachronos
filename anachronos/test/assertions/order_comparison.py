@@ -1,7 +1,6 @@
 from datetime import timedelta
 from typing import Callable
 
-from anachronos import Anachronos
 from anachronos.compat.jivago_streams import Stream
 from anachronos.test.assertion import Assertion
 
@@ -13,7 +12,7 @@ class OrderComparisonAssertion(Assertion):
         self.first = first
         self.second = second
 
-    def run(self, anachronos: Anachronos):
+    def run(self, anachronos: "Anachronos"):
         messages = anachronos._get_messages()
         first_index = messages.index(self.first)
         second_index = messages.index(self.second)
@@ -44,7 +43,7 @@ class IsRoughlyAtTheSameTimeAssertion(Assertion):
         self.second = second
         self.delta_ms = delta_ms
 
-    def run(self, anachronos: Anachronos):
+    def run(self, anachronos: "Anachronos"):
         messages = anachronos._get_messages()
 
         first, second = Stream.of(self.first, self.second) \

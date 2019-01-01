@@ -1,4 +1,3 @@
-from anachronos.test.assertion import Assertion
 from anachronos.test.assertion_fixture import AssertionFixture
 
 

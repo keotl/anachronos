@@ -1,6 +1,6 @@
 import multiprocessing
 
-from anachronos import Anachronos
+from anachronos.communication.anachronos import Anachronos
 
 
 class AnachronosClient(Anachronos):

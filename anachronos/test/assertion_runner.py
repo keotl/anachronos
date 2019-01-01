@@ -1,7 +1,7 @@
 from queue import Queue
 
 from anachronos import anachronos
-from anachronos.anachronos import AnachronosException
+from anachronos.communication.anachronos import AnachronosException
 from anachronos.test.assertion import Assertion
 
 

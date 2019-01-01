@@ -5,8 +5,9 @@ import threading
 import time
 from typing import Type, Dict
 
-from anachronos.anachronos import MessageQueue
+from anachronos.communication.anachronos import MessageQueue, AnachronosException
 from anachronos.communication.message_queue_consumer import MessageQueueConsumer
+from anachronos.compat.jivago_streams import Stream
 from anachronos.test.assertion_fixture import AssertionFixture
 from anachronos.test.boot.application_runner import ApplicationRunner
 from anachronos.test.registering_assertion_fixture import AssertionRegistry
@@ -20,10 +21,12 @@ class TestRunner(object):
         self.test_class = test_class
         self.queue = multiprocessing.Queue()
         self.application_runner = application_runner_class(self.queue)
-        self.consumer = MessageQueueConsumer(self.queue, MessageQueue())
+        self.anachronos_message_queue = MessageQueue()
+        self.consumer = MessageQueueConsumer(self.queue, self.anachronos_message_queue)
 
     def run(self):
         self.application_runner.run_app()
+        time.sleep(2)
         consumer_thread = threading.Thread(target=self.consumer.listen)
         consumer_thread.start()
 
@@ -36,7 +39,15 @@ class TestRunner(object):
                 assertion_registry = AssertionRegistry()
                 test_fixture.assertThat = lambda x: assertion_registry.create_fixture()(x)
                 test_method()
+                # TODO move assertion running?
+                time.sleep(1)
+                Stream(assertion_registry.assertions).forEach(
+                    lambda assertion: assertion.run(self.anachronos_message_queue))
+
                 print(f"{name}: OK")
+            except AnachronosException as e:
+                print(f"{name}: Failed")
+                print(e)
             except Exception as e:
                 print(f"{name}: Error")
                 print(e)

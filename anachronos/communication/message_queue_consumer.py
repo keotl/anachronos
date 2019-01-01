@@ -1,8 +1,6 @@
 import multiprocessing
 
-import time
-
-from anachronos.anachronos import MessageQueue
+from anachronos.communication.anachronos import MessageQueue
 
 
 class MessageQueueConsumer(object):
@@ -15,10 +13,8 @@ class MessageQueueConsumer(object):
     def listen(self):
         while not self.should_stop:
             if not self.queue.empty():
-                message = self.queue.get(timeout=0.5)
+                message = self.queue.get(timeout=0.2)
                 self.anachronos_server.store(message)
-            else:
-                time.sleep(0.2)
 
     def stop(self):
         self.should_stop = True

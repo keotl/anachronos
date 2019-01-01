@@ -1,4 +1,3 @@
-from anachronos import Anachronos
 from anachronos.compat.jivago_streams import Stream
 from anachronos.test.assertion import Assertion
 
@@ -8,7 +7,7 @@ class UnaryAssertion(Assertion):
     def __init__(self, item):
         self.item = item
 
-    def run(self, anachronos: Anachronos):
+    def run(self, anachronos: "Anachronos"):
         self._do_assertion(self.condition(anachronos._get_messages()), self.message())
 
     def message(self) -> str:
