@@ -1,4 +1,4 @@
-from anachronos.communication.anachronos import AnachronosException
+from anachronos.exceptions import AnachronosException
 
 
 class Assertion(object):

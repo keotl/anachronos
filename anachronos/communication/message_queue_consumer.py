@@ -1,6 +1,6 @@
 import multiprocessing
 
-from anachronos.communication.anachronos import MessageQueue
+from anachronos.communication.logging_interfaces import MessageQueue
 
 
 class MessageQueueConsumer(object):

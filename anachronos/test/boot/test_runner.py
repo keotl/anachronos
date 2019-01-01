@@ -5,9 +5,10 @@ import threading
 import time
 from typing import Type, Dict
 
-from anachronos.communication.anachronos import MessageQueue, AnachronosException
+from anachronos.communication.logging_interfaces import MessageQueue
 from anachronos.communication.message_queue_consumer import MessageQueueConsumer
 from anachronos.compat.jivago_streams import Stream
+from anachronos.exceptions import AnachronosException
 from anachronos.test.assertion_fixture import AssertionFixture
 from anachronos.test.boot.application_runner import ApplicationRunner
 from anachronos.test.registering_assertion_fixture import AssertionRegistry

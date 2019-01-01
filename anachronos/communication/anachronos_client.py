@@ -1,9 +1,9 @@
 import multiprocessing
 
-from anachronos.communication.anachronos import Anachronos
+from anachronos.communication.logging_interfaces import _Anachronos
 
 
-class AnachronosClient(Anachronos):
+class AnachronosClient(_Anachronos):
 
     def __init__(self, queue: multiprocessing.Queue):
         self.queue = queue
