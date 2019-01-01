@@ -1,3 +1,4 @@
+import anachronos.test.boot.test_case
 import anachronos.test.boot.test_runner
 from anachronos.communication.logging_interfaces import _Anachronos
 
@@ -17,6 +18,6 @@ def set_instance(instance):
     _instance = instance
 
 
-TestCase = anachronos.test.boot.test_runner.TestCase
+TestCase = anachronos.test.boot.test_case.TestCase
 
 run_tests = anachronos.test.boot.test_runner.run_tests
