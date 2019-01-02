@@ -31,7 +31,7 @@ setup(
     author_email='kento.lauzon@ligature.ca',
 
     classifiers=[
-        'Development Status :: 4 - Alpha',
+        'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Topic :: Software Development :: Testing',
         'License :: OSI Approved :: GNU General Public License v3 (GPLv3)',
