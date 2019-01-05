@@ -9,7 +9,7 @@ class HttpRequester(object):
         self.port = port
 
     def with_path(self, sub_path: str) -> "HttpRequester":
-        return HttpRequester(self.host + sub_path, self.port)
+        return HttpRequester(self.host, self.port, sub_path)
 
     def get(self, path: str, *args, **kwargs):
         return requests.get(self.get_full_url(path), *args, **kwargs)
