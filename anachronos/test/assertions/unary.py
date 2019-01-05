@@ -35,6 +35,15 @@ class NeverContainedAssertion(UnaryAssertion):
         return Stream(messages).noneMatch(lambda x: self.item in x.payload)
 
 
+class ContainedAtLeastOnceAssertion(UnaryAssertion):
+
+    def message(self) -> str:
+        return f'Failed "ContainedAtLeastOnce" assertion. {self.item} is never contained in a message, but should have.'
+
+    def condition(self, messages: list) -> bool:
+        return Stream(messages).anyMatch(lambda x: self.item in x.payload)
+
+
 class IsStoredAssertion(UnaryAssertion):
 
     def condition(self, messages: list):
