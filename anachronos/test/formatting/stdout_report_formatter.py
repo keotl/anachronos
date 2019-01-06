@@ -7,6 +7,7 @@ class StdoutReportFormatter(ReportFormatter):
 
     def format(self, report: TestReport):
         print(f"======== TestReport ========")
+        print(f"{report.test_report_name}\n")
 
         print(self.status_string(report.status))
         for test_result in report.test_results:
