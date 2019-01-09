@@ -9,7 +9,6 @@ class StdoutReportFormatter(ReportFormatter):
         print(f"======== TestReport ========")
         print(f"{report.test_report_name}\n")
 
-        print(self.status_string(report.status))
         for test_result in report.test_results:
             if test_result.is_success():
                 print(f"{test_result.test_name}: OK.")
@@ -20,7 +19,9 @@ class StdoutReportFormatter(ReportFormatter):
 
         print(f"============================")
 
+        print(self.status_string(report.status))
+
     def status_string(self, status: TestStatus) -> str:
-        return {TestStatus.SUCCESS: 'OK',
-                TestStatus.FAILURE: 'Failed',
-                TestStatus.ERROR: 'Error'}[status]
+        return {TestStatus.SUCCESS: 'All tests have passed.',
+                TestStatus.FAILURE: 'There were test failures.',
+                TestStatus.ERROR: 'There were unexpected test errors.'}[status]
