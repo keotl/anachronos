@@ -29,7 +29,7 @@ class TestRunner(object):
         self.consumer = MessageQueueConsumer(self.queue, self.anachronos_message_queue)
 
     def run(self) -> TestReportIndex:
-        self.application_runner.run_app()
+        self.application_runner.run()
         time.sleep(1)
         consumer_thread = threading.Thread(target=self.consumer.listen)
         consumer_thread.start()

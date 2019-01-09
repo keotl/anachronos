@@ -8,13 +8,13 @@ class ApplicationRunner(object):
 
     def __init__(self, queue: multiprocessing.Queue):
         self.queue = queue
-        self.process = Process(target=setup_and_run, args=(queue, self.app_run_function()))
+        self.process = Process(target=setup_and_run, args=(queue, self.app_run_function))
 
-    def run_app(self):
+    def run(self):
         self.process.start()
 
-    def app_run_function(self):
-        """Implement to return a function used to start your application."""
+    def app_run_function(self) -> None:
+        """Implement to start your application. This is the main loop."""
         raise NotImplementedError
 
     def stop(self):
