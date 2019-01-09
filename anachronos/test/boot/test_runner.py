@@ -63,11 +63,11 @@ def run_tests():
         if runner_class is None:
             runner_class = anachronos_config.default_runner
 
-        report = TestRunner(runner_class, test_classes_for_runner).run()
+        report_index = TestRunner(runner_class, test_classes_for_runner).run()
 
-        Stream(report.subreports).forEach(StdoutReportFormatter().format)
+        StdoutReportFormatter().format_report_index(report_index)
 
-        if report.is_success():
+        if report_index.is_success():
             sys.exit(0)
         else:
             sys.exit(1)
