@@ -19,7 +19,7 @@ class OccursEveryXSecondsTest(unittest.TestCase):
                          Message(START_TIME + timedelta(seconds=1), RELEVANT_MESSAGE),
                          Message(START_TIME + timedelta(seconds=2), "foo")]
         self.message_queue: MessageQueue = mock.create_autospec(MessageQueue)
-        self.message_queue._get_messages.return_value = self.messages
+        self.message_queue.get_messages.return_value = self.messages
 
         self.assertion = OccursEveryXSeconds(RELEVANT_MESSAGE, 1)
 

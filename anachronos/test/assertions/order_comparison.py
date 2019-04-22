@@ -13,7 +13,7 @@ class OrderComparisonAssertion(Assertion):
         self.second = second
 
     def run(self, anachronos: "Anachronos"):
-        messages = Stream(anachronos._get_messages()).map(lambda x: x.payload).toList()
+        messages = Stream(anachronos.get_messages()).map(lambda x: x.payload).toList()
         first_index = messages.index(self.first)
         second_index = messages.index(self.second)
 
@@ -44,7 +44,7 @@ class IsRoughlyAtTheSameTimeAssertion(Assertion):
         self.delta_ms = delta_ms
 
     def run(self, anachronos: "Anachronos"):
-        messages = anachronos._get_messages()
+        messages = anachronos.get_messages()
 
         first, second = Stream.of(self.first, self.second) \
             .map(lambda x: Stream(messages).firstMatch(lambda m: m.payload == x)) \

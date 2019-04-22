@@ -23,7 +23,7 @@ class MessageQueue(_Anachronos):
             raise AnachronosException("Anachronos object is frozen. Messages can no longer be stored.")
         self.messages.put(Message(datetime.now(), item))
 
-    def _get_messages(self) -> List[Message]:
+    def get_messages(self) -> List[Message]:
         if self.frozen_messages is None:
             self.frozen_messages = list(self.messages.queue)
 

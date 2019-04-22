@@ -10,7 +10,7 @@ class OccursEveryXSeconds(Assertion):
         self.interval_s = interval_s
 
     def run(self, anachronos: "Anachronos"):
-        times = Stream(anachronos._get_messages()) \
+        times = Stream(anachronos.get_messages()) \
             .filter(lambda x: x.payload == self.item) \
             .map(lambda x: x.time) \
             .toList()

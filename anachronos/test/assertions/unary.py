@@ -8,7 +8,7 @@ class UnaryAssertion(Assertion):
         self.item = item
 
     def run(self, anachronos: "Anachronos"):
-        self._do_assertion(self.condition(anachronos._get_messages()), self.message())
+        self._do_assertion(self.condition(anachronos.get_messages()), self.message())
 
     def message(self) -> str:
         raise NotImplementedError

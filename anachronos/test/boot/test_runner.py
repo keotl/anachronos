@@ -46,8 +46,10 @@ class TestRunner(object):
         self.consumer.stop()
         self.application_runner.stop()
 
-        return TestReportIndex(Stream(assertion_runners).map(
-            lambda assertion_runner: assertion_runner.evaluate(self.anachronos_message_queue)).toList())
+        return TestReportIndex(Stream(assertion_runners)
+                               .map(lambda assertion_runner: assertion_runner.evaluate(self.anachronos_message_queue))
+                               .toList(),
+                               self.anachronos_message_queue.get_messages())
 
 
 def run_tests():
