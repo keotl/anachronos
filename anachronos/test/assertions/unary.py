@@ -51,3 +51,12 @@ class IsStoredAssertion(UnaryAssertion):
 
     def message(self):
         return f'Failed "IsStored" assertion. Expected {self.item} to be stored at least once, but never was.'
+
+
+class IsStoredOnlyOnce(UnaryAssertion):
+
+    def condition(self, messages: list) -> bool:
+        return Stream(messages).filter(lambda x: self.item == x.payload).count() == 1
+
+    def message(self) -> str:
+        return f'Failed "IsStoredOnlyOnce" assertion. Expected {self.item} to be stored once and only once, but wasn\'t.'

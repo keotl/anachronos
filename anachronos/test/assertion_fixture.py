@@ -3,7 +3,7 @@ from anachronos.test.assertions.order_comparison import IsBeforeAssertion, IsAft
     IsRoughlyAtTheSameTimeAssertion
 from anachronos.test.assertions.schedule import OccursEveryXSeconds
 from anachronos.test.assertions.unary import NeverStoredAssertion, NeverContainedAssertion, IsStoredAssertion, \
-    ContainedAtLeastOnceAssertion
+    ContainedAtLeastOnceAssertion, IsStoredOnlyOnce
 
 
 class AssertionFixture(object):
@@ -28,6 +28,9 @@ class AssertionFixture(object):
 
     def is_stored(self) -> Assertion:
         return IsStoredAssertion(self.first_element)
+
+    def is_stored_only_once(self) -> Assertion:
+        return IsStoredOnlyOnce(self.first_element)
 
     def is_contained(self) -> Assertion:
         return ContainedAtLeastOnceAssertion(self.first_element)
