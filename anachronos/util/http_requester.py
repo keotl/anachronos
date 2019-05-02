@@ -43,10 +43,4 @@ class HttpRequester(object):
         return f"{self.host}:{self.port}{self.path}{path}"
 
     def _join_arg_dict(self, dict1, dict2) -> dict:
-        keys = list(Stream.of(dict1, dict2).map(dict.keys).toSet())
-        values = Stream(keys) \
-            .map(lambda key: (dict1.get(key), dict2.get(key))) \
-            .map(lambda x: Stream(x).filter(lambda y: y is not None).sum()) \
-            .toList()
-
-        return Stream.zip(keys, values).toDict()
+        return {**dict1, **dict2}
