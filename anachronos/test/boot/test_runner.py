@@ -55,6 +55,7 @@ class TestRunner(object):
 def run_tests():
     Stream(TestCase.__subclasses__()).forEach(lambda clazz: anachronos_config.register_test_class(None, clazz))
     distinct_runner_classes = Stream(anachronos_config.test_classes.values()).toSet()
+    reports = []
     for runner_class in distinct_runner_classes:
 
         test_classes_for_runner = Stream(anachronos_config.test_classes.items()) \
@@ -67,9 +68,11 @@ def run_tests():
 
         report_index = TestRunner(runner_class, test_classes_for_runner).run()
 
-        StdoutReportFormatter().format_report_index(report_index)
+        reports.append(report_index)
 
-        if report_index.is_success():
-            sys.exit(0)
-        else:
-            sys.exit(1)
+    Stream(reports).forEach(lambda x: StdoutReportFormatter().format_report_index(x))
+
+    if Stream(reports).allMatch(lambda x: x.is_success()):
+        sys.exit(0)
+    else:
+        sys.exit(1)
